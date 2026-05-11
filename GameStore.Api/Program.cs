@@ -1,36 +1,20 @@
 using GameStore.Api.Data;
 using GameStore.Api.Dtos;
-using GameStore.Api.Models;
-using GameStore.Api.Routes;
+using GameStore.Api.Models; 
+using GameStore.Api.Endpoints;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connString = builder.Configuration.GetConnectionString("GameStore");
-
-builder.Services.AddSqlite<GameStoreContext>(
-    connString,
-    optionsAction: options =>
-        options.UseSeeding((context, _) =>
-        {
-            if (!context.Set<Genre>().Any())
-            {
-                context.Set<Genre>().AddRange(
-                        new Genre { Name = "Action" },
-                        new Genre { Name = "Adventure" },
-                        new Genre { Name = "RPG" },
-                        new Genre { Name = "Strategy" },
-                        new Genre { Name = "Sports" }
-                );
-            } 
-        }));
-
+builder.AddGameStoreDb();
 
 builder.Services.AddValidation();
 
 var app = builder.Build();
 
-
 app.MapGameEndpoints();
+app.MapGenreEndpoints();
+
+app.MigrateDb();
 
 app.Run();

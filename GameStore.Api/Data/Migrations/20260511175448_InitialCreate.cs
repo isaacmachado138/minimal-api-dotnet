@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -31,7 +32,7 @@ namespace GameStore.Api.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     GenreId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Price = table.Column<decimal>(type: "REAL", nullable: false),
+                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
                     ReleaseDate = table.Column<DateOnly>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
